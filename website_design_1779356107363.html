@@ -1,0 +1,541 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CreatorLens — Monetisation Gap Analyser</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  color-scheme: dark;
+  --bg:#0F0F0F;
+  --charcoal:#1E1E1E;
+  --slate:#2A2A2A;
+  --offwhite:#EDEDED;
+  --accent:#FF0000;
+  --accent2:#1F7AE0;
+  --glow:0 0 20px rgba(255,0,0,0.5);
+  --section-gap:60px;
+  font-family:'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:linear-gradient(180deg,#0F0F0F,#070707 70%);
+  color:var(--offwhite);
+  min-height:100vh;
+  line-height:1.6;
+}
+.container{
+  width:min(1200px,100%);
+  margin:0 auto;
+  padding:24px;
+}
+header{
+  padding:80px 0 40px;
+  position:relative;
+  overflow:hidden;
+}
+header::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at top right, rgba(255,0,0,0.25), transparent 35%),
+    radial-gradient(circle at 20% 20%, rgba(31,122,224,0.2), transparent 45%);
+  pointer-events:none;
+}
+.hero{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.hero h1{
+  font-size:clamp(2.5rem,3vw + 1rem,3.75rem);
+  font-family:'Inter',system-ui,-apple-system;
+  letter-spacing:0.02em;
+}
+.hero p{
+  max-width:720px;
+  color:#cfcfcf;
+}
+.cta-group{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:16px;
+}
+.btn{
+  padding:14px 26px;
+  border-radius:999px;
+  border:none;
+  font-size:1rem;
+  font-weight:600;
+  transition:transform .15s ease, box-shadow .3s ease;
+  cursor:pointer;
+  font-family:'Inter',sans-serif;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),#ff4c4c);
+  color:#fff;
+  box-shadow:var(--glow);
+}
+.btn-secondary{
+  border:1px solid rgba(237,237,237,0.4);
+  background:transparent;
+  color:#fff;
+}
+.btn:focus-visible{outline:2px solid var(--accent2);}
+.btn:hover{transform:scale(1.02);}
+section{
+  padding:var(--section-gap) 0;
+  border-top:1px solid rgba(255,255,255,0.08);
+  position:relative;
+}
+section:first-of-type{border-top:none;}
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:18px;
+}
+.section-title h2{
+  font-size:2rem;
+  letter-spacing:0.01em;
+}
+.badge{
+  padding:4px 12px;
+  border-radius:999px;
+  font-size:0.85rem;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2);
+}
+.grid{
+  display:grid;
+  gap:18px;
+}
+.product-grid{
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+}
+.card{
+  background:var(--charcoal);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:24px;
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+  transition:transform .3s ease, box-shadow .3s ease;
+}
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,0.05);
+  pointer-events:none;
+}
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+.kpi-grid{
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+.kpi{
+  background:linear-gradient(145deg,rgba(255,255,255,0.04),rgba(0,0,0,0.6));
+  padding:18px;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.06);
+}
+.kpi h3{
+  font-size:1.6rem;
+  font-family:'JetBrains Mono',monospace;
+}
+.kpi p{
+  color:#bcbcbc;
+  font-size:0.9rem;
+}
+.feature{
+  background:linear-gradient(135deg,rgba(31,122,224,0.15),rgba(255,0,0,0.08));
+}
+.feature h3{
+  color:#fff;
+}
+.features-grid .card{
+  min-height:120px;
+}
+.module-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.module-item{
+  padding:14px 18px;
+  background:var(--slate);
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+.module-item span{
+  font-family:'JetBrains Mono',monospace;
+  color:var(--accent2);
+}
+.feature-tiles{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+.feature-tiles .tile{
+  background:rgba(255,255,255,0.02);
+  padding:16px;
+  border-radius:16px;
+  border:1px dashed rgba(255,255,255,0.15);
+  min-height:150px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.feature-tiles h4{
+  font-size:1.1rem;
+}
+.chart-placeholder{
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(255,0,0,0.1),rgba(31,122,224,0.2));
+  border:1px solid rgba(255,255,255,0.1);
+  min-height:220px;
+  position:relative;
+  overflow:hidden;
+}
+.chart-placeholder::before{
+  content:"Plotly Chart Placeholder";
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1rem;
+  color:rgba(255,255,255,0.5);
+}
+.chart-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+}
+.badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.badges span{
+  padding:6px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.2);
+  font-size:0.85rem;
+}
+.panel{
+  background:var(--charcoal);
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.1);
+  padding:22px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;
+}
+input, textarea{
+  width:100%;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.2);
+  background:transparent;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+}
+textarea{
+  resize:vertical;
+  min-height:120px;
+}
+footer{
+  padding:40px 0;
+  border-top:1px solid rgba(255,255,255,0.08);
+  text-align:center;
+  color:#888;
+  font-size:0.9rem;
+}
+.link{
+  color:var(--accent2);
+  text-decoration:none;
+}
+@media (max-width:768px){
+  .hero h1{text-align:center;}
+  .cta-group{justify-content:center;}
+  .section-title{flex-direction:column;align-items:flex-start;}
+}
+.noise{
+  position:absolute;
+  inset:0;
+  background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"%3E%3C/feTurbulence%3E%3C/filter%3E%3Crect width="300" height="300" filter="url(%23n)" opacity="0.08"/%3E%3C/svg%3E');
+  mix-blend-mode:screen;
+  opacity:0.6;
+  pointer-events:none;
+}
+.loader{
+  width:36px;
+  height:36px;
+  border:4px solid rgba(255,255,255,0.1);
+  border-top-color:var(--accent);
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
+}
+@keyframes spin{
+  to{transform:rotate(360deg);}
+}
+</style>
+</head>
+<body>
+<div class="noise"></div>
+<header>
+  <div class="container">
+    <div class="hero">
+      <p class="badge">CreatorLens Platform</p>
+      <h1>Find the Monetisation Gap Behind Your Audience</h1>
+      <p>Analyse what truly drives creator revenue—beyond follower counts. Monetisation Gap Analyser ingests YouTube data, models predictors, and surfaces actionable insights to close the gap between potential and realised income.</p>
+      <div class="cta-group">
+        <button class="btn btn-primary" onclick="scrollToSection('product')">Launch the Dashboard</button>
+        <button class="btn btn-secondary" onclick="scrollToSection('app-pages')">Try Channel Analyser</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="product">
+  <div class="container">
+    <div class="section-title">
+      <h2>Product Overview</h2>
+      <span class="badge">Data-First</span>
+    </div>
+    <div class="grid product-grid">
+      <div class="card">
+        <h3>What it does</h3>
+        <p>Ingests YouTube channel data, models predictors, and reveals monetisation efficiency via a clear gap score.</p>
+      </div>
+      <div class="card">
+        <h3>Who it's for</h3>
+        <p>Creators, agencies, talent managers, and analysts who want transparent revenue signals.</p>
+      </div>
+      <div class="card">
+        <h3>Outcome</h3>
+        <p>Clear gap score plus prioritized actions so your team knows precisely where to focus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>Key Components</h2>
+      <span class="badge">Streamlit + Data Science</span>
+    </div>
+    <div class="grid features-grid feature-tiles">
+      <div class="card feature">
+        <h3>Data Collection Module</h3>
+        <p>SQLite-cached YouTube API with 500-row seed dataset for seamless no-API mode.</p>
+      </div>
+      <div class="card feature">
+        <h3>Analysis Engine</h3>
+        <p>Combines linear regression, feature importance, outlier detection, and cohort segmentation.</p>
+      </div>
+      <div class="card feature">
+        <h3>Gap Calculator</h3>
+        <p>Score 0–100 with ranked improvements and top 3 actionable recommendations.</p>
+      </div>
+      <div class="card feature">
+        <h3>Interactive Dashboards</h3>
+        <p>Plotly charts, KPI cards, performance filters, and hover tooltips with transparent skins.</p>
+      </div>
+      <div class="card feature">
+        <h3>Deployment</h3>
+        <p>Streamlit Cloud-ready with .env support and env-keyed secrets management.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <h2>App Pages (Streamlit)</h2>
+      <span class="badge">Live Experience</span>
+    </div>
+    <div class="grid chart-grid">
+      <div class="card chart-placeholder">
+        <div>Overview Dashboard</div>
+        <div class="module-item">
+          <strong>KPI Cards:</strong>
+          <p>Avg Revenue • Avg Engagement • Top Niche • Biggest Gap</p>
+        </div>
+        <div class="module-item">
+          <strong>Scatter:</strong> Subscribers vs Revenue colored by niche
+        </div>
+        <div class="module-item">
+          <strong>Feature Importance:</strong> Plotly bar chart
+        </div>
+      </div>
+      <div class="card chart-placeholder">
+        <div>Channel Analyser</div>
+        <div class="module-item">
+          <strong>Input:</strong> Paste YouTube channel URL
+        </div>
+        <div class="module-item">
+          <strong>Live Fetch & Cache:</strong> Gap score, peer benchmark, top 3 recommendations
+        </div>
+        <div class="module-item">
+          <strong>Micro-Interactions:</strong> Loading spinner, skeleton tables
+        </div>
+      </div>
+      <div class="card chart-placeholder">
+        <div>Cohort Analysis</div>
+        <div class="module-item">
+          <strong>Line Chart:</strong> Revenue trends by subscriber tiers
+        </div>
+        <div class="module-item">
+          <strong>Heatmap:</strong> Niche × engagement vs revenue
+        </div>
+        <div class="module-item">
+          <strong>Table:</strong> Top 20 monetisation-efficient channels
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <h2>Methodology & Metrics</h2>
+      <span class="badge">Transparent Signals</span>
+    </div>
+    <div class="grid product-grid">
+      <div class="card">
+        <h3>Metrics</h3>
+        <p>subscriber_count, views, video_count, avg_views, engagement_rate, upload_frequency, channel_age_days, niche, country.</p>
+      </div>
+      <div class="card">
+        <h3>Revenue Proxy</h3>
+        <p>avg_views × 0.003 USD per view to estimate baseline earnings.</p>
+      </div>
+      <div class="card">
+        <h3>Efficiency</h3>
+        <p>actual_revenue / expected_for_subscriber_count for gap scoring.</p>
+      </div>
+      <div class="card">
+        <h3>Cohorts</h3>
+        <p>10k–50k, 50k–500k, 500k+ subscribers with tailored insights.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <h2>Trust & Transparency</h2>
+      <span class="badge">Explainable AI</span>
+    </div>
+    <div class="grid module-list">
+      <div class="module-item">
+        <strong>Model Explainability:</strong> Linear regression assumptions, feature importance reasoning, cohort contexts.
+      </div>
+      <div class="module-item">
+        <strong>Data Privacy:</strong> Secure caching, OAuth token handling, no raw data exports without consent.
+      </div>
+      <div class="module-item">
+        <strong>API Usage:</strong> Rate limit-aware SQLite cache + fallback dataset for reliable demos.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <h2>Documentation & Onboarding</h2>
+      <span class="badge">Ship Ready</span>
+    </div>
+    <div class="grid product-grid">
+      <div class="card">
+        <h3>Quick Start</h3>
+        <p>Clone repo, pip install -r requirements.txt, and run streamlit run app.py.</p>
+      </div>
+      <div class="card">
+        <h3>Environment Setup</h3>
+        <p>.env template includes API keys, caching toggles, and cohort configs.</p>
+      </div>
+      <div class="card">
+        <h3>API Key Guide</h3>
+        <p>Step-by-step YouTube Data API credential setup with OAuth refresh handling.</p>
+      </div>
+      <div class="card">
+        <h3>Data Dictionary</h3>
+        <p>Definitions for every metric, calculated field, and scoring component.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <h2>Contact & Feedback</h2>
+      <span class="badge">Stay Connected</span>
+    </div>
+    <div class="grid product-grid">
+      <div class="card panel">
+        <h3>Partnerships & Inquiries</h3>
+        <p>Email us at <a class="link" href="mailto:partnerships@creatorlens.ai">partnerships@creatorlens.ai</a> for integrations, deployments, and analyst collaborations.</p>
+      </div>
+      <div class="card panel">
+        <h3>Feedback Loop</h3>
+        <p>Report bugs, request features, or review datasets via <a class="link" href="https://github.com/creatorlens/issues" target="_blank" rel="noreferrer">GitHub Issues</a>.</p>
+      </div>
+      <div class="card panel">
+        <h3>Form</h3>
+        <form class="form-grid">
+          <input type="text" placeholder="Name" required>
+          <input type="email" placeholder="Email" required>
+          <textarea placeholder="Tell us about your creator challenge"></textarea>
+          <button class="btn btn-primary" type="button" onclick="handleForm()">Submit Feedback</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© CreatorLens — Monetisation Gap Analyser. Designed for creators and analysts who demand clarity from data.</p>
+  </div>
+</footer>
+
+<script>
+const scrollToSection = (id) => {
+  const el = document.getElementById(id);
+  if(el){
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+};
+const handleForm = () => {
+  const btn = event?.target || null;
+  btn?.setAttribute('disabled','');
+  setTimeout(()=>{
+    alert('Thanks! Our team will be in touch.');
+    btn?.removeAttribute('disabled');
+  },700);
+};
+</script>
+</body>
+</html>
